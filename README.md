@@ -1,30 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Custom Auth0 Pages
 
-## Getting Started
+This repo is an example on how to create a custom login page for Auth0 with Next.js
 
-First, run the development server:
+In the root you will find the `auth0` folder. This contains a `login.html` file, which is the default Custom Login Page provider by Auth0 with the form removed. The `login.tsx` is a basic react app with the form and contains the basic logic to log in and sign up. You can customize both to your needs.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Build the template
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+In the `next.config.js` file the webpack config is extended. It adds the `login.tsx` to the webpack entries and adds the HtmlWebpackPlugin. The HtmlWebpackPlugin is configured to only be used for the `login.tsx` file. In the `login.html` file you'll notice that I loop through the generated files and parse them as a string. This is necessary because auth0 doesnt allow you to serve hosted assets, therefor we serve them inline.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+**I noticed that react 17 has some problems when being served inline. Please use react 16**
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+When you run `yarn build` next will generate a `auth0-login.html` file in the `.next` folder. Copy the contents of this file to custom login page in the Auth0 admin dashboard. Congratulations you've now created a custom login page with Next.js
